@@ -46,58 +46,57 @@ export function StartScreen({ onPlay, onLeaderboard }: StartScreenProps) {
         }}
       />
 
-      {/* Animated plane SVG */}
+      {/* Animated stealth jet SVG */}
       <div className="game-float" style={{ marginTop: "-8%" }}>
         <svg width="96" height="72" viewBox="0 0 96 72">
-          {/* Engine glow */}
-          <ellipse cx="12" cy="36" rx="10" ry="6" fill="url(#exhaustGlow)" opacity="0.7">
-            <animate attributeName="opacity" values="0.5;0.8;0.5" dur="0.3s" repeatCount="indefinite" />
-          </ellipse>
           <defs>
-            <radialGradient id="exhaustGlow">
-              <stop offset="0%" stopColor="#FFB74D" />
-              <stop offset="60%" stopColor="#FF8A65" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#FF5722" stopOpacity="0" />
+            <radialGradient id="jetGlow" cx="15%" cy="50%">
+              <stop offset="0%" stopColor="#4FC3F7" />
+              <stop offset="50%" stopColor="#0288D1" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#01579B" stopOpacity="0" />
             </radialGradient>
             <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#F5F5F5" />
-              <stop offset="40%" stopColor="#E0E0E0" />
-              <stop offset="100%" stopColor="#BDBDBD" />
+              <stop offset="0%" stopColor="#4A5568" />
+              <stop offset="50%" stopColor="#3D4555" />
+              <stop offset="100%" stopColor="#2D3645" />
             </linearGradient>
             <linearGradient id="wingGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#E0E0E0" />
-              <stop offset="100%" stopColor="#9E9E9E" />
+              <stop offset="0%" stopColor="#35404F" />
+              <stop offset="100%" stopColor="#232B38" />
             </linearGradient>
           </defs>
-          {/* Engine */}
-          <rect x="10" y="31" width="8" height="10" rx="1" fill="#616161" />
-          {/* Tail fin */}
-          <polygon points="20,36 10,14 28,34" fill="#EF5350" stroke="#C62828" strokeWidth="0.8" />
-          <polygon points="20,36 10,58 28,38" fill="#BDBDBD" stroke="#9E9E9E" strokeWidth="0.5" />
-          {/* Body */}
-          <ellipse cx="48" cy="36" rx="32" ry="10" fill="url(#bodyGrad)" stroke="#9E9E9E" strokeWidth="0.8" />
-          {/* Stripe */}
-          <line x1="18" y1="38" x2="75" y2="38" stroke="#EF5350" strokeWidth="1.5" opacity="0.7" />
-          {/* Windows */}
-          <circle cx="40" cy="33" r="1.5" fill="#90CAF9" opacity="0.6" />
-          <circle cx="46" cy="33" r="1.5" fill="#90CAF9" opacity="0.6" />
-          <circle cx="52" cy="33" r="1.5" fill="#90CAF9" opacity="0.6" />
-          {/* Top wing */}
-          <polygon points="38,26 50,8 58,10 48,26" fill="url(#wingGrad)" stroke="#9E9E9E" strokeWidth="0.5" />
-          <polygon points="50,8 58,10 56,14 49,12" fill="#EF5350" opacity="0.8" />
-          {/* Bottom wing */}
-          <polygon points="38,46 50,64 58,62 48,46" fill="url(#wingGrad)" stroke="#9E9E9E" strokeWidth="0.5" />
-          <polygon points="50,64 58,62 56,58 49,60" fill="#EF5350" opacity="0.8" />
-          {/* Cockpit */}
-          <ellipse cx="68" cy="34" rx="8" ry="8" fill="#42A5F5" stroke="#1565C0" strokeWidth="0.8" />
-          <ellipse cx="70" cy="32" rx="3" ry="3" fill="white" opacity="0.35" />
-          {/* Nose */}
-          <polygon points="76,36 84,33 84,39" fill="#757575" />
-          {/* Propeller disc */}
-          <ellipse cx="84" cy="36" rx="2" ry="12" fill="#9E9E9E" opacity="0.4">
-            <animate attributeName="ry" values="12;10;12" dur="0.1s" repeatCount="indefinite" />
+          {/* Afterburner glow */}
+          <ellipse cx="10" cy="36" rx="12" ry="6" fill="url(#jetGlow)" opacity="0.6">
+            <animate attributeName="opacity" values="0.4;0.8;0.4" dur="0.5s" repeatCount="indefinite" />
+            <animate attributeName="rx" values="10;14;10" dur="0.5s" repeatCount="indefinite" />
           </ellipse>
-          <circle cx="84" cy="36" r="2.5" fill="#757575" />
+          {/* Nozzle */}
+          <rect x="16" y="31" width="6" height="10" fill="#3A4050" stroke="rgba(80,120,180,0.3)" strokeWidth="0.5" />
+          {/* Twin tail fins */}
+          <polygon points="22,36 12,14 18,16 26,34" fill="#2A3040" stroke="rgba(100,140,200,0.3)" strokeWidth="0.5" />
+          <polygon points="22,36 12,58 18,56 26,38" fill="#252D3A" stroke="rgba(100,140,200,0.3)" strokeWidth="0.5" />
+          <line x1="14" y1="18" x2="25" y2="34" stroke="#4FC3F7" strokeWidth="0.8" opacity="0.5" />
+          <line x1="14" y1="54" x2="25" y2="38" stroke="#4FC3F7" strokeWidth="0.8" opacity="0.35" />
+          {/* Top delta wing */}
+          <polygon points="30,28 40,8 56,12 52,28" fill="url(#wingGrad)" stroke="rgba(100,140,200,0.25)" strokeWidth="0.5" />
+          <line x1="40" y1="8" x2="56" y2="12" stroke="#4FC3F7" strokeWidth="1" opacity="0.5" />
+          {/* Bottom delta wing */}
+          <polygon points="30,44 40,64 56,60 52,44" fill="url(#wingGrad)" stroke="rgba(100,140,200,0.2)" strokeWidth="0.5" />
+          <line x1="40" y1="64" x2="56" y2="60" stroke="#4FC3F7" strokeWidth="1" opacity="0.35" />
+          {/* Angular fuselage */}
+          <polygon points="18,36 28,26 56,27 78,34 80,36 78,38 56,45 28,46" fill="url(#bodyGrad)" stroke="rgba(120,160,220,0.25)" strokeWidth="0.6" />
+          {/* Center ridge */}
+          <line x1="22" y1="36" x2="76" y2="36" stroke="rgba(150,180,220,0.15)" strokeWidth="0.5" />
+          {/* Neon accent stripe */}
+          <line x1="22" y1="37" x2="72" y2="37" stroke="#4FC3F7" strokeWidth="1.2" opacity="0.5" />
+          {/* Canopy */}
+          <path d="M48,27 Q58,22 70,33 L70,37 Q58,40 48,38 Z" fill="rgba(100,200,255,0.5)" stroke="rgba(60,100,160,0.5)" strokeWidth="0.8" />
+          <ellipse cx="62" cy="30" rx="3" ry="3" fill="white" opacity="0.3" />
+          {/* Nose tip */}
+          <polygon points="76,34 84,36 76,38" fill="#505868" />
+          <circle cx="82" cy="36" r="1.2" fill="#4FC3F7" opacity="0.6">
+            <animate attributeName="opacity" values="0.4;0.8;0.4" dur="1.5s" repeatCount="indefinite" />
+          </circle>
         </svg>
       </div>
 
