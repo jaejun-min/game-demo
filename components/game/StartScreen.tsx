@@ -51,18 +51,18 @@ export function StartScreen({ onPlay, onLeaderboard }: StartScreenProps) {
         <svg width="96" height="72" viewBox="0 0 96 72">
           <defs>
             <radialGradient id="jetGlow" cx="15%" cy="50%">
-              <stop offset="0%" stopColor="#4FC3F7" />
-              <stop offset="50%" stopColor="#0288D1" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#01579B" stopOpacity="0" />
+              <stop offset="0%" stopColor="#00E5FF" />
+              <stop offset="50%" stopColor="#00B8D4" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#006064" stopOpacity="0" />
             </radialGradient>
             <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#4A5568" />
-              <stop offset="50%" stopColor="#3D4555" />
-              <stop offset="100%" stopColor="#2D3645" />
+              <stop offset="0%" stopColor="#F0F4F8" />
+              <stop offset="50%" stopColor="#D8DEE6" />
+              <stop offset="100%" stopColor="#B0BAC8" />
             </linearGradient>
             <linearGradient id="wingGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#35404F" />
-              <stop offset="100%" stopColor="#232B38" />
+              <stop offset="0%" stopColor="#D0D8E0" />
+              <stop offset="100%" stopColor="#A0B0C0" />
             </linearGradient>
           </defs>
           {/* Afterburner glow */}
@@ -71,31 +71,31 @@ export function StartScreen({ onPlay, onLeaderboard }: StartScreenProps) {
             <animate attributeName="rx" values="10;14;10" dur="0.5s" repeatCount="indefinite" />
           </ellipse>
           {/* Nozzle */}
-          <rect x="16" y="31" width="6" height="10" fill="#3A4050" stroke="rgba(80,120,180,0.3)" strokeWidth="0.5" />
+          <rect x="16" y="31" width="6" height="10" fill="#8090A0" stroke="rgba(255,255,255,0.25)" strokeWidth="0.5" />
           {/* Twin tail fins */}
-          <polygon points="22,36 12,14 18,16 26,34" fill="#2A3040" stroke="rgba(100,140,200,0.3)" strokeWidth="0.5" />
-          <polygon points="22,36 12,58 18,56 26,38" fill="#252D3A" stroke="rgba(100,140,200,0.3)" strokeWidth="0.5" />
-          <line x1="14" y1="18" x2="25" y2="34" stroke="#4FC3F7" strokeWidth="0.8" opacity="0.5" />
-          <line x1="14" y1="54" x2="25" y2="38" stroke="#4FC3F7" strokeWidth="0.8" opacity="0.35" />
+          <polygon points="22,36 12,14 18,16 26,34" fill="#C0C8D8" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5" />
+          <polygon points="22,36 12,58 18,56 26,38" fill="#B0B8C8" stroke="rgba(255,255,255,0.25)" strokeWidth="0.5" />
+          <line x1="14" y1="18" x2="25" y2="34" stroke="#00E5FF" strokeWidth="0.8" opacity="0.7" />
+          <line x1="14" y1="54" x2="25" y2="38" stroke="#00E5FF" strokeWidth="0.8" opacity="0.5" />
           {/* Top delta wing */}
-          <polygon points="30,28 40,8 56,12 52,28" fill="url(#wingGrad)" stroke="rgba(100,140,200,0.25)" strokeWidth="0.5" />
-          <line x1="40" y1="8" x2="56" y2="12" stroke="#4FC3F7" strokeWidth="1" opacity="0.5" />
+          <polygon points="30,28 40,8 56,12 52,28" fill="url(#wingGrad)" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5" />
+          <line x1="40" y1="8" x2="56" y2="12" stroke="#00E5FF" strokeWidth="1" opacity="0.7" />
           {/* Bottom delta wing */}
-          <polygon points="30,44 40,64 56,60 52,44" fill="url(#wingGrad)" stroke="rgba(100,140,200,0.2)" strokeWidth="0.5" />
-          <line x1="40" y1="64" x2="56" y2="60" stroke="#4FC3F7" strokeWidth="1" opacity="0.35" />
+          <polygon points="30,44 40,64 56,60 52,44" fill="url(#wingGrad)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+          <line x1="40" y1="64" x2="56" y2="60" stroke="#00E5FF" strokeWidth="1" opacity="0.5" />
           {/* Angular fuselage */}
-          <polygon points="18,36 28,26 56,27 78,34 80,36 78,38 56,45 28,46" fill="url(#bodyGrad)" stroke="rgba(120,160,220,0.25)" strokeWidth="0.6" />
+          <polygon points="18,36 28,26 56,27 78,34 80,36 78,38 56,45 28,46" fill="url(#bodyGrad)" stroke="rgba(160,180,200,0.5)" strokeWidth="0.6" />
           {/* Center ridge */}
-          <line x1="22" y1="36" x2="76" y2="36" stroke="rgba(150,180,220,0.15)" strokeWidth="0.5" />
+          <line x1="22" y1="36" x2="76" y2="36" stroke="rgba(160,180,200,0.25)" strokeWidth="0.5" />
           {/* Neon accent stripe */}
-          <line x1="22" y1="37" x2="72" y2="37" stroke="#4FC3F7" strokeWidth="1.2" opacity="0.5" />
+          <line x1="22" y1="37" x2="72" y2="37" stroke="#00E5FF" strokeWidth="1.2" opacity="0.8" />
           {/* Canopy */}
-          <path d="M48,27 Q58,22 70,33 L70,37 Q58,40 48,38 Z" fill="rgba(100,200,255,0.5)" stroke="rgba(60,100,160,0.5)" strokeWidth="0.8" />
-          <ellipse cx="62" cy="30" rx="3" ry="3" fill="white" opacity="0.3" />
+          <path d="M48,27 Q58,22 70,33 L70,37 Q58,40 48,38 Z" fill="rgba(100,220,255,0.6)" stroke="rgba(0,229,255,0.4)" strokeWidth="0.8" />
+          <ellipse cx="62" cy="30" rx="3" ry="3" fill="white" opacity="0.4" />
           {/* Nose tip */}
-          <polygon points="76,34 84,36 76,38" fill="#505868" />
-          <circle cx="82" cy="36" r="1.2" fill="#4FC3F7" opacity="0.6">
-            <animate attributeName="opacity" values="0.4;0.8;0.4" dur="1.5s" repeatCount="indefinite" />
+          <polygon points="76,34 84,36 76,38" fill="#C0C8D4" />
+          <circle cx="82" cy="36" r="1.2" fill="#00E5FF" opacity="0.7">
+            <animate attributeName="opacity" values="0.5;0.9;0.5" dur="1.5s" repeatCount="indefinite" />
           </circle>
         </svg>
       </div>
