@@ -1,0 +1,318 @@
+version: 1
+
+scenarios:
+  - id: "SKY-001"
+    name: "게임 시작"
+    given: "'Play'과 'Leaderboard' 버튼이 있는 시작 화면"
+    when: "'Play' 버튼을 클릭한다"
+    then: "게임 플레이 화면으로 전환되고 비행기가 화면에 표시된다"
+    examples:
+      - input: { action: "click Play" }
+        expect:
+          screen: "gameplay"
+          planeVisible: true
+
+  - id: "SKY-002"
+    name: "시작 화면에서 리더보드 조회"
+    given: "'Play'과 'Leaderboard' 버튼이 있는 시작 화면"
+    when: "'Leaderboard' 버튼을 클릭한다"
+    then: "리더보드 화면에 상위 10명의 이름과 점수가 순위와 함께 표시된다"
+    examples:
+      - input: { action: "click Leaderboard" }
+        expect:
+          screen: "leaderboard"
+          maxEntries: 10
+
+  - id: "SKY-003"
+    name: "스페이스바로 비행기 상승"
+    given: "게임 플레이 중인 화면"
+    when: "스페이스바를 누른다"
+    then: "비행기가 위로 상승한다"
+    examples:
+      - input: { key: "Space" }
+        expect:
+          planeDirection: "up"
+
+  - id: "SKY-004"
+    name: "중력으로 비행기 하강"
+    given: "게임 플레이 중인 화면"
+    when: "아무 키도 누르지 않는다"
+    then: "비행기가 중력에 의해 아래로 하강한다"
+    examples:
+      - input: { key: "none" }
+        expect:
+          planeDirection: "down"
+
+  - id: "SKY-005"
+    name: "모바일 탭으로 비행기 상승"
+    given: "모바일 기기에서 게임 플레이 중인 화면"
+    when: "화면을 탭한다"
+    then: "비행기가 위로 상승한다"
+    examples:
+      - input: { action: "tap" }
+        expect:
+          planeDirection: "up"
+
+  - id: "SKY-006"
+    name: "파이프 통과 시 점수 획득"
+    given: "게임 플레이 중 점수가 0점인 화면"
+    when: "비행기가 파이프 사이 틈을 통과한다"
+    then: "점수가 1점 증가하고 화면 상단에 '1'이 표시된다"
+    examples:
+      - input: { action: "pass pipe", currentScore: 0 }
+        expect:
+          scoreText: "1"
+          scoreVisible: true
+
+  - id: "SKY-020"
+    name: "파이프 스크롤 방향"
+    given: "게임 플레이 중인 화면"
+    when: "파이프가 생성된다"
+    then: "파이프가 화면 오른쪽에서 나타나 왼쪽으로 이동한다"
+    examples:
+      - input: { action: "pipe spawned" }
+        expect:
+          pipeSpawnSide: "right"
+          pipeMoveDirection: "left"
+
+  - id: "SKY-021"
+    name: "스크롤 속도 최대값 상한"
+    given: "게임 플레이가 장시간 진행되어 속도가 최대값에 도달한 화면"
+    when: "시간이 더 경과한다"
+    then: "파이프 스크롤 속도가 최대값을 초과하지 않는다"
+    examples:
+      - input: { elapsedTime: "max reached" }
+        expect:
+          speedCapped: true
+      - input: { elapsedTime: "beyond max" }
+        expect:
+          speedCapped: true
+
+  - id: "SKY-022"
+    name: "파이프 틈 최소값 하한"
+    given: "게임 플레이 중 파이프 틈이 최소값에 도달한 화면"
+    when: "점수가 더 올라간다"
+    then: "파이프 사이 틈이 최소값 이하로 줄어들지 않는다"
+    examples:
+      - input: { score: 100 }
+        expect:
+          gapAtMinimum: true
+      - input: { score: 200 }
+        expect:
+          gapAtMinimum: true
+
+  - id: "SKY-007"
+    name: "파이프 충돌로 게임 오버"
+    given: "게임 플레이 중인 화면"
+    when: "비행기가 파이프에 충돌한다"
+    then: "게임 오버 화면이 표시되고 최종 점수가 보인다"
+    examples:
+      - input: { action: "collide with pipe", score: 5 }
+        expect:
+          screen: "gameover"
+          finalScoreText: "5"
+
+  - id: "SKY-008"
+    name: "화면 상단 경계 충돌로 게임 오버"
+    given: "게임 플레이 중인 화면"
+    when: "비행기가 화면 상단 경계에 닿는다"
+    then: "게임 오버 화면이 표시된다"
+    examples:
+      - input: { action: "hit top boundary" }
+        expect:
+          screen: "gameover"
+
+  - id: "SKY-009"
+    name: "화면 하단 경계 충돌로 게임 오버"
+    given: "게임 플레이 중인 화면"
+    when: "비행기가 화면 하단 경계에 닿는다"
+    then: "게임 오버 화면이 표시된다"
+    examples:
+      - input: { action: "hit bottom boundary" }
+        expect:
+          screen: "gameover"
+
+  - id: "SKY-010"
+    name: "시간 경과에 따라 스크롤 속도 증가"
+    given: "게임 플레이가 진행 중인 화면"
+    when: "시간이 경과한다"
+    then: "파이프 스크롤 속도가 점진적으로 증가하되 최대값을 초과하지 않는다"
+    examples:
+      - input: { elapsedTime: "early" }
+        expect:
+          speedLevel: "slow"
+      - input: { elapsedTime: "late" }
+        expect:
+          speedLevel: "fast"
+
+  - id: "SKY-011"
+    name: "점수 증가에 따라 파이프 틈 축소"
+    given: "게임 플레이 중인 화면"
+    when: "점수가 올라간다"
+    then: "파이프 사이 틈이 점진적으로 좁아지되 최소값 이하로 줄어들지 않는다"
+    examples:
+      - input: { score: 0 }
+        expect:
+          gapSize: "wide"
+      - input: { score: 50 }
+        expect:
+          gapSize: "narrow"
+
+  - id: "SKY-012"
+    name: "점수 구간별 낮 테마"
+    given: "게임 플레이 중 점수가 0~9인 화면"
+    when: "배경을 확인한다"
+    then: "낮 테마(밝은 하늘)가 표시된다"
+    examples:
+      - input: { score: 0 }
+        expect:
+          theme: "day"
+      - input: { score: 9 }
+        expect:
+          theme: "day"
+
+  - id: "SKY-013"
+    name: "점수 구간별 노을 테마"
+    given: "게임 플레이 중 점수가 10~24인 화면"
+    when: "배경을 확인한다"
+    then: "노을 테마가 표시된다"
+    examples:
+      - input: { score: 10 }
+        expect:
+          theme: "sunset"
+      - input: { score: 24 }
+        expect:
+          theme: "sunset"
+
+  - id: "SKY-014"
+    name: "점수 구간별 밤 테마"
+    given: "게임 플레이 중 점수가 25~49인 화면"
+    when: "배경을 확인한다"
+    then: "밤 테마(별)가 표시된다"
+    examples:
+      - input: { score: 25 }
+        expect:
+          theme: "night"
+      - input: { score: 49 }
+        expect:
+          theme: "night"
+
+  - id: "SKY-015"
+    name: "점수 구간별 우주 테마"
+    given: "게임 플레이 중 점수가 50 이상인 화면"
+    when: "배경을 확인한다"
+    then: "우주 테마(별, 행성)가 표시된다"
+    examples:
+      - input: { score: 50 }
+        expect:
+          theme: "space"
+      - input: { score: 100 }
+        expect:
+          theme: "space"
+
+  - id: "SKY-016"
+    name: "리더보드 점수 제출"
+    given: "게임 오버 화면에서 이름 입력란과 'Submit', 'Skip' 버튼이 표시된 상태"
+    when: "이름 입력란에 'ACE'를 입력하고 'Submit' 버튼을 클릭한다"
+    then: "점수가 서버에 저장되고 리더보드에 반영된다"
+    examples:
+      - input: { name: "ACE", score: 30 }
+        expect:
+          screen: "leaderboard"
+          leaderboardContains: "ACE"
+
+  - id: "SKY-017"
+    name: "리더보드 제출 건너뛰기"
+    given: "게임 오버 화면에서 이름 입력란과 'Submit', 'Skip' 버튼이 표시된 상태"
+    when: "'Skip' 버튼을 클릭한다"
+    then: "점수를 제출하지 않고 시작 화면으로 이동한다"
+    examples:
+      - input: { action: "click Skip" }
+        expect:
+          screen: "start"
+
+  - id: "SKY-018"
+    name: "이름 미입력 시 Submit 비활성화"
+    given: "게임 오버 화면에서 이름 입력란이 비어 있는 상태"
+    when: "'Submit' 버튼 상태를 확인한다"
+    then: "'Submit' 버튼이 비활성화되어 있다"
+    examples:
+      - input: { name: "" }
+        expect:
+          submitButtonDisabled: true
+
+  - id: "SKY-019"
+    name: "리더보드 정렬"
+    given: "리더보드 화면에 여러 점수가 등록된 상태"
+    when: "리더보드를 조회한다"
+    then: "점수 내림차순으로 정렬되어 순위, 이름, 점수가 표시된다"
+    examples:
+      - input: { action: "view leaderboard" }
+        expect:
+          sortOrder: "descending"
+          columns: ["순위", "이름", "점수"]
+
+  - id: "SKY-023"
+    name: "프레임률 독립 물리 연산"
+    given: "게임 플레이 중인 화면"
+    when: "프레임이 업데이트된다"
+    then: "중력, 속도, 위치 연산이 delta time 기반으로 동작하여 모니터 주사율에 관계없이 동일한 게임 속도를 유지한다"
+    examples:
+      - input: { deltaTime: 16 }
+        expect:
+          frameRateIndependent: true
+      - input: { deltaTime: 8 }
+        expect:
+          frameRateIndependent: true
+
+  - id: "SKY-024"
+    name: "delta time 상한 클램핑"
+    given: "게임 플레이 중 탭이 비활성화되었다가 복귀한 화면"
+    when: "delta time이 50ms를 초과한다"
+    then: "delta time이 50ms로 클램핑되어 비정상적인 물리 연산이 방지된다"
+    examples:
+      - input: { rawDeltaTime: 2000 }
+        expect:
+          clampedDeltaTime: 50
+
+  - id: "SKY-025"
+    name: "탭 비활성화 시 자동 일시정지"
+    given: "게임 플레이 중인 화면"
+    when: "브라우저 탭이 비활성화된다"
+    then: "게임이 자동으로 일시정지되고 'Paused' 텍스트가 표시된다"
+    examples:
+      - input: { action: "tab hidden" }
+        expect:
+          pausedText: "Paused"
+          gameRunning: false
+
+  - id: "SKY-026"
+    name: "탭 복귀 시 일시정지 유지"
+    given: "탭 비활성화로 게임이 일시정지된 화면"
+    when: "브라우저 탭이 다시 활성화된다"
+    then: "일시정지 상태가 유지되고 스페이스바 또는 탭으로 재개할 수 있다"
+    examples:
+      - input: { action: "tab visible" }
+        expect:
+          pausedText: "Paused"
+          gameRunning: false
+      - input: { action: "press Space" }
+        expect:
+          gameRunning: true
+
+  - id: "SKY-027"
+    name: "Canvas 고정 해상도"
+    given: "게임 화면이 렌더링될 때"
+    when: "Canvas가 초기화된다"
+    then: "Canvas 내부 해상도가 480x640으로 고정되고 화면 비율을 유지하며 CSS로 스케일링된다"
+    examples:
+      - input: { screenWidth: 1920 }
+        expect:
+          canvasWidth: 480
+          canvasHeight: 640
+          aspectRatioMaintained: true
+      - input: { screenWidth: 375 }
+        expect:
+          canvasWidth: 480
+          canvasHeight: 640
+          aspectRatioMaintained: true
